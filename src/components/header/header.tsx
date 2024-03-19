@@ -3,10 +3,12 @@ import BurgerMenu from "../ui/buttons/burgerMenu"
 import { useState } from "react";
 import CartButton from "../ui/buttons/cartButton";
 import ProfileButton from "../ui/buttons/profileButton";
+import useScreenDetector from "@/src/hooks/useScreenDetector";
 
 
 export default function Header() {
     const [mobileNavIsActive, setMobileNavIsActive] = useState(false);
+    const isMobile = useScreenDetector(768)
     const showMobileNavHandler = () => {
         setMobileNavIsActive(prev => !prev);
     };
@@ -23,9 +25,36 @@ export default function Header() {
                     <div>
                         <p className="flex text-center flex-nowrap font-bold p-2 text-lg md:text-xl xl:text-2xl">Suple Station</p>
                     </div>
-
+                    {isMobile && (
+                        <div>
+                            <nav>
+                                <ul>
+                                    <li>Brands</li>
+                                    <li>Categories</li>
+                                    <li>Bestsellers</li>
+                                    <li>About us</li>
+                                    <li>Blog</li>
+                                    <li>Contact</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    )}
                 </div>
                 <div className="flex justify-end items-center gap-4">
+                    {!isMobile && (
+                        <div>
+                            <nav>
+                                <ul className="flex">
+                                    <li>Brands</li>
+                                    <li>Categories</li>
+                                    <li>Bestsellers</li>
+                                    <li>About us</li>
+                                    <li>Blog</li>
+                                    <li>Contact</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    )}
                     <div>
                         <input type="text" placeholder="search..." className="p-1 rounded-xl bg-primary-600 text-creme-500 w-full" />
                     </div>
@@ -33,18 +62,8 @@ export default function Header() {
                     <div><ProfileButton /></div>
                 </div>
             </div>
-            {/* <div>
-                <nav>
-                    <ul>
-                        <li>Brands</li>
-                        <li>Categories</li>
-                        <li>Bestsellers</li>
-                        <li>About us</li>
-                        <li>Blog</li>
-                        <li>Contact</li>
-                    </ul>
-                </nav>
-            </div> */}
-        </header>
+
+
+        </header >
     )
 }
