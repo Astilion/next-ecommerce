@@ -1,5 +1,6 @@
 import useScreenDetector from "@/src/hooks/useScreenDetector";
 import Link from "next/link";
+import { capitalize } from "@/src/utils/capitalize"
 
 interface NavListProps {
     isActive?: boolean;
@@ -24,7 +25,7 @@ export default function NavList({ isActive }: NavListProps) {
             {navNames.map((name, index) => (
                 <li key={index} className="pb-2 px-2 border-b-2 border-solid border-creme-500 lg:border-none lg:pb-0 lg:px-0">
                     <Link href='#' className={anchorClasses}>
-                        {name}
+                        {capitalize(name)}
                     </Link>
                 </li>
             ))}
