@@ -6,6 +6,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      height: {
+        "screen": "100dvh",
+        "screen-small": "100svh",
+        "screen-large": "100lvh",
+      },
+      width: {
+        "screen": "100dvw",
+        "screen-small": "100svw",
+        "screen-large": "100lvw",
+      },
       colors: {
         primary: {
           DEFAULT: '#393E46',
