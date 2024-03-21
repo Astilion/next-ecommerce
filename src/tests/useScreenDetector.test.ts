@@ -1,24 +1,29 @@
 import useScreenDetector from "../hooks/useScreenDetector";
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 
-test('useScreenDetector hook', () => {
-  const { result, rerender } = renderHook(() => useScreenDetector(1024));
+describe('useScreenDetector', () => {
+  it('should return true for mobile screen sizes', () => {
+    window.innerWidth = 500
+    const { result } = renderHook(() => useScreenDetector(768))
+    expect(result.current).toBe(true)
+  })
 
-  // Initial render
-  expect(result.current).toBe(true);
+  it('should return false for non-mobile screen sizes', () => {
+    window.innerWidth = 800
+    const { result } = renderHook(() => useScreenDetector(768))
+    expect(result.current).toBe(false)
+  })
 
-  // Simulate resize to a desktop width
-  window.innerWidth = 1280;
-  window.dispatchEvent(new Event('resize'));
-  rerender();
-  expect(result.current).toBe(false); // should be false
+  it('should update value when window size changes', async () => {
+    window.innerWidth = 800
+    const { result } = renderHook(() => useScreenDetector(768))
+    expect(result.current).toBe(false)
 
-  // Simulate resize to a mobile width
-  window.innerWidth = 500;
-  window.dispatchEvent(new Event('resize'));
-  rerender();
-  expect(result.current).toBe(true); // should now be true
+    act(() => {
+      window.innerWidth = 500
+      window.dispatchEvent(new Event('resize'))
+    })
 
-  // Test cleanup
-  window.innerWidth = 1280; // reset the window width
-});
+    expect(result.current).toBe(true)
+  })
+})
