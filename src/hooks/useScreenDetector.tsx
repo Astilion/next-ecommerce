@@ -2,29 +2,24 @@
 import { useState, useEffect } from "react";
 
 export default function useScreenDetector(px: number) {
-    const [width, setWidth] = useState<number>(0)
-    const [isMobile, setIsMobile] = useState(false)
+
+    const [width, setWidth] = useState<number>(window.innerWidth);
+    const [isMobile, setIsMobile] = useState<boolean>(false);
+
     function handleWindowSizeChange() {
-        setWidth(window.innerWidth)
+        setWidth(window.innerWidth);
     }
 
     useEffect(() => {
-        setWidth(window.innerWidth)
-        setIsMobile(width <= 768)
-        window.addEventListener('resize', handleWindowSizeChange)
+        handleWindowSizeChange()
+        setIsMobile(width < px)
+        window.addEventListener('resize', handleWindowSizeChange);
+
         return () => {
-            window.removeEventListener('resize', handleWindowSizeChange)
-        }
-    }, [width]);
+            window.removeEventListener('resize', handleWindowSizeChange);
+        };
+    }, [px, width]);
 
-    useEffect(() => {
-        setIsMobile(width <= px)
-    }, [px, width])
-
-    if(isMobile === null) {
-        return false
-    }
-
-    return isMobile
+    return isMobile;
 }
 

@@ -6,7 +6,7 @@ interface BurgerMenuProps {
 const BurgerMenu = ({ isNavOpen, toggleNav }: BurgerMenuProps) => {
     return (
         <button
-            className={`group mr-auto p-3 md:hidden group ${isNavOpen ? styles.cross : styles.burger}`}
+            className={`group mr-auto p-3 group ${isNavOpen ? styles.cross : styles.burger}`}
             onClick={toggleNav}
         >
             <div
