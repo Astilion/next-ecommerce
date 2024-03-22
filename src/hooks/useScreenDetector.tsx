@@ -2,8 +2,7 @@
 import { useState, useEffect } from "react";
 
 export default function useScreenDetector(px: number) {
-    const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < px);
-
+    const [isMobile, setIsMobile] = useState<boolean>(typeof window !== 'undefined' ? window.innerWidth < px : false);
     useEffect(() => {
         function handleWindowSizeChange() {
             setIsMobile(window.innerWidth < px);
