@@ -6,7 +6,7 @@ interface NavListProps {
     isActive?: boolean;
 }
 export default function NavList({ isActive }: NavListProps) {
-    const isMobile = useScreenDetector(1024)
+    const isMobile = useScreenDetector(false)
     const navNames: string[] = [
         "brands", "categories", "bestsellers", "about us", "blog", "contact"
     ]

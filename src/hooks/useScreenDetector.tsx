@@ -1,23 +1,15 @@
 'use client'
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from 'react';
 
-export default function useScreenDetector(px: number) {
-    const [isMobile, setIsMobile] = useState<boolean>(false);
-
-    const handleWindowSizeChange = useCallback(() => {
-        if (typeof window !== 'undefined') {
-            setIsMobile(window.innerWidth < px);
-        }
-    }, [px]);
+export default function useScreenDetector(defaultIsMobile = false) {
+    const [isMobile, setIsMobile] = useState(defaultIsMobile);
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            window.addEventListener('resize', handleWindowSizeChange);
-            return () => {
-                window.removeEventListener('resize', handleWindowSizeChange);
-            };
-        }
-    }, [handleWindowSizeChange]);
+        const checkIsMobile = () => setIsMobile(window.innerWidth < 1024);
+        checkIsMobile();
+        window.addEventListener('resize', checkIsMobile);
+        return () => window.removeEventListener('resize', checkIsMobile);
+    }, []);
 
     return isMobile;
 }

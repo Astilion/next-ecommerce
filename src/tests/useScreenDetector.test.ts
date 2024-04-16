@@ -3,27 +3,35 @@ import { renderHook, act } from '@testing-library/react';
 
 describe('useScreenDetector', () => {
   it('should return true for mobile screen sizes', () => {
-    window.innerWidth = 500
-    const { result } = renderHook(() => useScreenDetector(768))
-    expect(result.current).toBe(true)
-  })
+    global.innerWidth = 500;
+
+    const { result } = renderHook(() => useScreenDetector(true));
+
+
+    expect(result.current).toBe(true);
+  });
 
   it('should return false for non-mobile screen sizes', () => {
-    window.innerWidth = 800
-    const { result } = renderHook(() => useScreenDetector(768))
-    expect(result.current).toBe(false)
-  })
+    global.innerWidth = 1200;
 
-  it('should update value when window size changes', async () => {
-    window.innerWidth = 800
-    const { result } = renderHook(() => useScreenDetector(768))
-    expect(result.current).toBe(false)
+    const { result } = renderHook(() => useScreenDetector(true));
+
+    expect(result.current).toBe(false);
+  });
+
+  it('should update isMobile when the window size changes', () => {
+    global.innerWidth = 1200;
+
+    const { result } = renderHook(() => useScreenDetector(true));
+
+    expect(result.current).toBe(false);
 
     act(() => {
-      window.innerWidth = 500
-      window.dispatchEvent(new Event('resize'))
-    })
+      global.innerWidth = 500;
+      global.dispatchEvent(new Event('resize'));
+    });
 
-    expect(result.current).toBe(true)
-  })
-})
+
+    expect(result.current).toBe(true);
+  });
+});

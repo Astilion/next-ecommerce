@@ -10,7 +10,7 @@ import DesktopNav from "./nav/desktopNav";
 
 export default function Header() {
     const [mobileNavIsActive, setMobileNavIsActive] = useState(false);
-    const isMobile = useScreenDetector(1024)
+    const isMobile = useScreenDetector(false)
     const showMobileNavHandler = () => {
         setMobileNavIsActive(prev => !prev);
     };
